@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>证件照排版工具</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>证件照排版工具</h1>
+        
+        <!-- 文件上传区域 -->
+        <div class="upload-section">
+            <h2>上传照片</h2>
+            <input type="file" id="fileInput" accept="image/*">
+            <p>请上传一张证件照，建议使用白色背景</p>
+        </div>
+        
+        <!-- 预览区域 -->
+        <div class="preview-section">
+            <h2>预览</h2>
+            <div class="preview-container">
+                <img id="previewImage" src="" alt="预览图片">
+            </div>
+            <div class="rotate-buttons">
+                <button id="rotateLeftBtn">向左旋转</button>
+                <button id="rotateRightBtn">向右旋转</button>
+            </div>
+        </div>
+        
+        <!-- 排版选项 -->
+        <div class="options-section">
+            <h2>排版选项</h2>
+            <div class="option-group">
+                <label>照片尺寸：</label>
+                <select id="photoSize">
+                    <!-- 一寸照片 -->
+                    <option value="25x35">25mm × 35mm (标准一寸)</option>
+                    <option value="22x32">22mm × 32mm (小一寸 - 驾照、身份证)</option>
+                    <option value="33x48">33mm × 48mm (大一寸 - 护照、港澳通行证)</option>
+                    <!-- 二寸照片 -->
+                    <option value="35x53">35mm × 53mm (标准二寸)</option>
+                    <option value="35x45">35mm × 45mm (小二寸 - 部分签证、毕业照)</option>
+                    <option value="35x50">35mm × 50mm (大二寸 - 部分考试报名用)</option>
+                    <option value="35x55">35mm × 55mm (大二寸 - 部分考试报名用)</option>
+                    <!-- 其他签证照片 -->
+                    <option value="41x51">41mm × 51mm (加拿大签证)</option>
+                    <option value="26x32">26mm × 32mm (日本签证)</option>
+                    <option value="20x30">20mm × 30mm (泰国签证)</option>
+                    <option value="30x40">30mm × 40mm (韩国签证)</option>
+                </select>
+            </div>
+            <div class="option-group">
+                <label>纸张尺寸：</label>
+                <select id="paperSize">
+                    <option value="a4">A4 (210mm × 297mm)</option>
+                    <option value="a3">A3 (297mm × 420mm)</option>
+                    <option value="6inch">6寸 (152mm × 102mm)</option>
+                    <option value="5inch">5寸 (127mm × 89mm)</option>
+                    <option value="4inch">4寸 (102mm × 76mm)</option>
+                </select>
+            </div>
+            <div class="option-group">
+                <label>排列方式：</label>
+                <select id="layout">
+                    <option value="custom">自定义</option>
+                    <option value="3x4">3×4 (12张)</option>
+                    <option value="2x4">2×4 (8张)</option>
+                    <option value="2x3">2×3 (6张)</option>
+                </select>
+            </div>
+            <div class="option-group" id="customLayoutGroup">
+                <label>自定义行列：</label>
+                <input type="number" id="cols" min="1" max="10" value="3" placeholder="列数">
+                <span>×</span>
+                <input type="number" id="rows" min="1" max="10" value="4" placeholder="行数">
+            </div>
+            <div class="option-group">
+                <label>水平间距：</label>
+                <button class="spacing-btn" id="horizontalSpacingMinus">-</button>
+                <input type="range" id="horizontalSpacing" min="0" max="20" value="5" step="1">
+                <button class="spacing-btn" id="horizontalSpacingPlus">+</button>
+                <span id="horizontalSpacingValue">5mm</span>
+            </div>
+            <div class="option-group">
+                <label>垂直间距：</label>
+                <button class="spacing-btn" id="verticalSpacingMinus">-</button>
+                <input type="range" id="verticalSpacing" min="0" max="20" value="5" step="1">
+                <button class="spacing-btn" id="verticalSpacingPlus">+</button>
+                <span id="verticalSpacingValue">5mm</span>
+            </div>
+            <button id="generateBtn">生成排版</button>
+        </div>
+        
+        <!-- 排版结果 -->
+        <div class="result-section">
+            <h2>排版结果</h2>
+            <div class="result-container">
+                <canvas id="resultCanvas"></canvas>
+            </div>
+            <div class="button-group">
+                <button id="downloadBtn">下载排版</button>
+                <button id="printBtn">打印排版</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
