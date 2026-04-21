@@ -14,7 +14,7 @@ body {
 
 /* 容器样式 */
 .container {
-    max-width: 1200px;
+    max-width: calc(100% - 350px);
     margin: 0 auto;
     padding: 20px;
 }
@@ -123,20 +123,32 @@ h2 {
 
 /* 选项区域 */
 .options-section {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 1000;
 }
 
 .option-group {
     margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .option-group label {
     display: inline-block;
+    min-width: 80px;
     width: 100px;
+    margin-right: 10px;
     font-weight: bold;
 }
 
@@ -182,6 +194,8 @@ h2 {
     align-items: center;
     justify-content: center;
     transition: background-color 0.3s ease;
+    flex-shrink: 0;
+    margin: 0 3px;
 }
 
 .spacing-btn:hover {
@@ -264,7 +278,16 @@ h2 {
 /* 响应式布局 */
 @media (max-width: 768px) {
     .container {
+        max-width: 100%;
         padding: 10px;
+    }
+    
+    .options-section {
+        position: static;
+        transform: none;
+        width: 100%;
+        max-height: none;
+        margin-bottom: 20px;
     }
     
     h1 {

@@ -15,6 +15,11 @@ const verticalSpacing = document.getElementById('verticalSpacing');
 const verticalSpacingValue = document.getElementById('verticalSpacingValue');
 const verticalSpacingMinus = document.getElementById('verticalSpacingMinus');
 const verticalSpacingPlus = document.getElementById('verticalSpacingPlus');
+const alignment = document.getElementById('alignment');
+const margin = document.getElementById('margin');
+const marginValue = document.getElementById('marginValue');
+const marginMinus = document.getElementById('marginMinus');
+const marginPlus = document.getElementById('marginPlus');
 const generateBtn = document.getElementById('generateBtn');
 const resultCanvas = document.getElementById('resultCanvas');
 const downloadBtn = document.getElementById('downloadBtn');
@@ -165,8 +170,208 @@ function setupRowColWheelAdjustment() {
     });
 }
 
+// 页边距调整事件监听
+margin.addEventListener('input', function() {
+    marginValue.textContent = `${this.value}mm`;
+});
+
+// 页边距按钮点击事件
+marginMinus.addEventListener('click', function() {
+    let value = parseInt(margin.value);
+    if (value > 0) {
+        value--;
+        margin.value = value;
+        marginValue.textContent = `${value}mm`;
+        margin.dispatchEvent(new Event('change'));
+    }
+});
+
+marginPlus.addEventListener('click', function() {
+    let value = parseInt(margin.value);
+    if (value < 50) {
+        value++;
+        margin.value = value;
+        marginValue.textContent = `${value}mm`;
+        margin.dispatchEvent(new Event('change'));
+    }
+});
+
+// 页边距鼠标滚轮调整
+margin.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    let value = parseInt(this.value);
+    if (e.deltaY < 0) {
+        // 向上滚动，增加页边距
+        if (value < 50) {
+            value++;
+        }
+    } else {
+        // 向下滚动，减少页边距
+        if (value > 0) {
+            value--;
+        }
+    }
+    this.value = value;
+    marginValue.textContent = `${value}mm`;
+    this.dispatchEvent(new Event('change'));
+});
+
 // 初始化行列数鼠标滚轮调整
 setupRowColWheelAdjustment();
+
+// 初始化切割线调整控件
+function setupCuttingLineAdjustment() {
+    const cuttingLineHorizontal = document.getElementById('cuttingLineHorizontal');
+    const cuttingLineVertical = document.getElementById('cuttingLineVertical');
+    const cuttingLineHorizontalValue = document.getElementById('cuttingLineHorizontalValue');
+    const cuttingLineVerticalValue = document.getElementById('cuttingLineVerticalValue');
+    
+    // 切割线水平调整
+    cuttingLineHorizontal.addEventListener('input', function() {
+        cuttingLineHorizontalValue.textContent = `${this.value}mm`;
+        this.dispatchEvent(new Event('change'));
+    });
+    
+    // 切割线垂直调整
+    cuttingLineVertical.addEventListener('input', function() {
+        cuttingLineVerticalValue.textContent = `${this.value}mm`;
+        this.dispatchEvent(new Event('change'));
+    });
+    
+    // 切割线水平调整按钮
+    document.getElementById('cuttingLineHorizontalMinus').addEventListener('click', function() {
+        let value = parseInt(cuttingLineHorizontal.value);
+        if (value > -10) {
+            value--;
+            cuttingLineHorizontal.value = value;
+            cuttingLineHorizontalValue.textContent = `${value}mm`;
+            cuttingLineHorizontal.dispatchEvent(new Event('change'));
+        }
+    });
+    
+    document.getElementById('cuttingLineHorizontalPlus').addEventListener('click', function() {
+        let value = parseInt(cuttingLineHorizontal.value);
+        if (value < 10) {
+            value++;
+            cuttingLineHorizontal.value = value;
+            cuttingLineHorizontalValue.textContent = `${value}mm`;
+            cuttingLineHorizontal.dispatchEvent(new Event('change'));
+        }
+    });
+    
+    // 切割线垂直调整按钮
+    document.getElementById('cuttingLineVerticalMinus').addEventListener('click', function() {
+        let value = parseInt(cuttingLineVertical.value);
+        if (value > -10) {
+            value--;
+            cuttingLineVertical.value = value;
+            cuttingLineVerticalValue.textContent = `${value}mm`;
+            cuttingLineVertical.dispatchEvent(new Event('change'));
+        }
+    });
+    
+    document.getElementById('cuttingLineVerticalPlus').addEventListener('click', function() {
+        let value = parseInt(cuttingLineVertical.value);
+        if (value < 10) {
+            value++;
+            cuttingLineVertical.value = value;
+            cuttingLineVerticalValue.textContent = `${value}mm`;
+            cuttingLineVertical.dispatchEvent(new Event('change'));
+        }
+    });
+    
+    // 添加鼠标滚轮调整
+    cuttingLineHorizontal.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        let value = parseInt(this.value);
+        if (e.deltaY < 0) {
+            // 向上滚动，增加水平调整
+            if (value < 10) {
+                value++;
+            }
+        } else {
+            // 向下滚动，减少水平调整
+            if (value > -10) {
+                value--;
+            }
+        }
+        this.value = value;
+        cuttingLineHorizontalValue.textContent = `${value}mm`;
+        this.dispatchEvent(new Event('change'));
+    });
+    
+    cuttingLineVertical.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        let value = parseInt(this.value);
+        if (e.deltaY < 0) {
+            // 向上滚动，增加垂直调整
+            if (value < 10) {
+                value++;
+            }
+        } else {
+            // 向下滚动，减少垂直调整
+            if (value > -10) {
+                value--;
+            }
+        }
+        this.value = value;
+        cuttingLineVerticalValue.textContent = `${value}mm`;
+        this.dispatchEvent(new Event('change'));
+    });
+    
+    // 切割线间距调整
+    const cuttingLineSpacing = document.getElementById('cuttingLineSpacing');
+    const cuttingLineSpacingValue = document.getElementById('cuttingLineSpacingValue');
+    
+    cuttingLineSpacing.addEventListener('input', function() {
+        cuttingLineSpacingValue.textContent = `${this.value}mm`;
+        this.dispatchEvent(new Event('change'));
+    });
+    
+    // 切割线间距调整按钮
+    document.getElementById('cuttingLineSpacingMinus').addEventListener('click', function() {
+        let value = parseInt(cuttingLineSpacing.value);
+        if (value > 0) {
+            value--;
+            cuttingLineSpacing.value = value;
+            cuttingLineSpacingValue.textContent = `${value}mm`;
+            cuttingLineSpacing.dispatchEvent(new Event('change'));
+        }
+    });
+    
+    document.getElementById('cuttingLineSpacingPlus').addEventListener('click', function() {
+        let value = parseInt(cuttingLineSpacing.value);
+        if (value < 10) {
+            value++;
+            cuttingLineSpacing.value = value;
+            cuttingLineSpacingValue.textContent = `${value}mm`;
+            cuttingLineSpacing.dispatchEvent(new Event('change'));
+        }
+    });
+    
+    // 添加鼠标滚轮调整
+    cuttingLineSpacing.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        let value = parseInt(this.value);
+        if (e.deltaY < 0) {
+            // 向上滚动，增加间距
+            if (value < 10) {
+                value++;
+            }
+        } else {
+            // 向下滚动，减少间距
+            if (value > 0) {
+                value--;
+            }
+        }
+        this.value = value;
+        cuttingLineSpacingValue.textContent = `${value}mm`;
+        this.dispatchEvent(new Event('change'));
+    });
+}
+
+// 初始化切割线调整
+setupCuttingLineAdjustment();
 
 // 更新预览图片
 function updatePreview() {
@@ -314,13 +519,49 @@ function generateLayout() {
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, paperWidth, paperHeight);
     
+    // 获取对齐方式和页边距
+    const selectedAlignment = alignment.value;
+    const selectedMargin = parseInt(margin.value);
+    const marginPx = mmToPx(selectedMargin);
+    
     // 计算间距
     const horizontalSpacingPx = mmToPx(selectedHorizontalSpacing);
     const verticalSpacingPx = mmToPx(selectedVerticalSpacing);
     const totalPhotoWidth = cols * photoWidth + (cols - 1) * horizontalSpacingPx;
     const totalPhotoHeight = rows * photoHeight + (rows - 1) * verticalSpacingPx;
-    const horizontalMargin = (paperWidth - totalPhotoWidth) / 2;
-    const verticalMargin = (paperHeight - totalPhotoHeight) / 2;
+    
+    // 根据对齐方式计算边距，确保四周都有页边距
+    let horizontalMargin, verticalMargin;
+    // 计算可用空间（减去四周的页边距）
+    const availableWidth = paperWidth - 2 * marginPx;
+    const availableHeight = paperHeight - 2 * marginPx;
+    
+    switch(selectedAlignment) {
+        case 'center':
+            // 居中对齐
+            horizontalMargin = marginPx + (availableWidth - totalPhotoWidth) / 2;
+            verticalMargin = marginPx + (availableHeight - totalPhotoHeight) / 2;
+            break;
+        case 'left':
+            // 左对齐
+            horizontalMargin = marginPx; // 左侧留用户设置的页边距
+            verticalMargin = marginPx + (availableHeight - totalPhotoHeight) / 2;
+            break;
+        case 'right':
+            // 右对齐
+            horizontalMargin = paperWidth - totalPhotoWidth - marginPx; // 右侧留用户设置的页边距
+            verticalMargin = marginPx + (availableHeight - totalPhotoHeight) / 2;
+            break;
+        case 'corner':
+            // 角落对齐（左上角）
+            horizontalMargin = marginPx; // 左侧留用户设置的页边距
+            verticalMargin = marginPx; // 顶部留用户设置的页边距
+            break;
+        default:
+            // 默认居中对齐
+            horizontalMargin = marginPx + (availableWidth - totalPhotoWidth) / 2;
+            verticalMargin = marginPx + (availableHeight - totalPhotoHeight) / 2;
+    }
     
     // 绘制照片
     function drawPhotos() {
@@ -338,15 +579,46 @@ function generateLayout() {
             effectiveHeight = photoHeight;
         }
         
-        // 重新计算总宽度和高度，以及边距
+        // 重新计算总宽度和高度
         const totalWidth = cols * effectiveWidth + (cols - 1) * horizontalSpacingPx;
         const totalHeight = rows * effectiveHeight + (rows - 1) * verticalSpacingPx;
-        const adjustedHorizontalMargin = (paperWidth - totalWidth) / 2;
-        const adjustedVerticalMargin = (paperHeight - totalHeight) / 2;
+        
+        // 根据对齐方式计算调整后的边距，确保四周都有页边距
+        let adjustedHorizontalMargin, adjustedVerticalMargin;
+        // 计算可用空间（减去四周的页边距）
+        const availableWidth = paperWidth - 2 * marginPx;
+        const availableHeight = paperHeight - 2 * marginPx;
+        
+        switch(selectedAlignment) {
+            case 'center':
+                // 居中对齐
+                adjustedHorizontalMargin = marginPx + (availableWidth - totalWidth) / 2;
+                adjustedVerticalMargin = marginPx + (availableHeight - totalHeight) / 2;
+                break;
+            case 'left':
+                // 左对齐
+                adjustedHorizontalMargin = marginPx; // 左侧留用户设置的页边距
+                adjustedVerticalMargin = marginPx + (availableHeight - totalHeight) / 2;
+                break;
+            case 'right':
+                // 右对齐
+                adjustedHorizontalMargin = paperWidth - totalWidth - marginPx; // 右侧留用户设置的页边距
+                adjustedVerticalMargin = marginPx + (availableHeight - totalHeight) / 2;
+                break;
+            case 'corner':
+                // 角落对齐（左上角）
+                adjustedHorizontalMargin = marginPx; // 左侧留用户设置的页边距
+                adjustedVerticalMargin = marginPx; // 顶部留用户设置的页边距
+                break;
+            default:
+                // 默认居中对齐
+                adjustedHorizontalMargin = marginPx + (availableWidth - totalWidth) / 2;
+                adjustedVerticalMargin = marginPx + (availableHeight - totalHeight) / 2;
+        }
         
         for (let row = 0; row < rows; row++) {
             for (let col = 0; col < cols; col++) {
-                // 计算照片的位置，考虑旋转后的实际尺寸
+                // 计算照片的位置，考虑旋转后的实际尺寸和对齐方式
                 const x = adjustedHorizontalMargin + col * (effectiveWidth + horizontalSpacingPx);
                 const y = adjustedVerticalMargin + row * (effectiveHeight + verticalSpacingPx);
                 
@@ -372,11 +644,169 @@ function generateLayout() {
                 
                 // 恢复原始状态
                 ctx.restore();
+                
+                // 绘制切割线（在照片下方和右侧）
+                ctx.strokeStyle = '#ccc';
+                ctx.lineWidth = 0.5;
+                
+                // 右侧切割线
+                ctx.beginPath();
+                ctx.moveTo(x + effectiveWidth, y);
+                ctx.lineTo(x + effectiveWidth, y + effectiveHeight);
+                ctx.stroke();
+                
+                // 下方切割线
+                ctx.beginPath();
+                ctx.moveTo(x, y + effectiveHeight);
+                ctx.lineTo(x + effectiveWidth, y + effectiveHeight);
+                ctx.stroke();
             }
         }
     }
     
     drawPhotos();
+    
+    // 绘制贯穿整个纸张的切割线
+    function drawCuttingLines() {
+        // 获取切割线设置
+        const showCuttingLines = document.getElementById('showCuttingLines').checked;
+        if (!showCuttingLines) return;
+        
+        // 获取切割线颜色
+        const cuttingLineColor = document.getElementById('cuttingLineColor').value;
+        ctx.strokeStyle = cuttingLineColor;
+        ctx.lineWidth = 0.5;
+        
+        // 获取切割线调整值（以照片边缘为基线）
+        const cuttingLineHorizontalAdjust = parseInt(document.getElementById('cuttingLineHorizontal').value);
+        const cuttingLineVerticalAdjust = parseInt(document.getElementById('cuttingLineVertical').value);
+        const cuttingLineSpacing = parseInt(document.getElementById('cuttingLineSpacing').value);
+        const cuttingLineHorizontalAdjustPx = mmToPx(cuttingLineHorizontalAdjust);
+        const cuttingLineVerticalAdjustPx = mmToPx(cuttingLineVerticalAdjust);
+        const cuttingLineSpacingPx = mmToPx(cuttingLineSpacing);
+        
+        // 计算照片间距（使用用户设置的水平和垂直间距）
+        const horizontalSpacingValue = parseInt(horizontalSpacing.value);
+        const verticalSpacingValue = parseInt(verticalSpacing.value);
+        const horizontalSpacingPx = mmToPx(horizontalSpacingValue);
+        const verticalSpacingPx = mmToPx(verticalSpacingValue);
+        
+        // 计算照片的实际尺寸（考虑旋转后的最大占用空间）
+        const photoWidthPx = mmToPx(photoDimensions[0]);
+        const photoHeightPx = mmToPx(photoDimensions[1]);
+        
+        // 计算旋转后照片的最大占用空间（使用外接矩形的尺寸）
+        const angle = rotation % 360;
+        let effectiveWidth, effectiveHeight;
+        
+        if (angle === 90 || angle === 270) {
+            // 横向照片，交换宽高
+            effectiveWidth = photoHeightPx;
+            effectiveHeight = photoWidthPx;
+        } else {
+            // 纵向照片，保持原宽高
+            effectiveWidth = photoWidthPx;
+            effectiveHeight = photoHeightPx;
+        }
+        
+        // 获取对齐方式和页边距
+        const selectedAlignment = alignment.value;
+        const selectedMargin = parseInt(margin.value);
+        const marginPx = mmToPx(selectedMargin);
+        
+        // 重新计算总宽度和高度（使用用户设置的间距）
+        const totalWidth = cols * effectiveWidth + (cols - 1) * horizontalSpacingPx;
+        const totalHeight = rows * effectiveHeight + (rows - 1) * verticalSpacingPx;
+        
+        // 根据对齐方式计算调整后的边距，确保四周都有页边距
+        let adjustedHorizontalMargin, adjustedVerticalMargin;
+        // 计算可用空间（减去四周的页边距）
+        const availableWidth = paperWidth - 2 * marginPx;
+        const availableHeight = paperHeight - 2 * marginPx;
+        
+        switch(selectedAlignment) {
+            case 'center':
+                // 居中对齐
+                adjustedHorizontalMargin = marginPx + (availableWidth - totalWidth) / 2;
+                adjustedVerticalMargin = marginPx + (availableHeight - totalHeight) / 2;
+                break;
+            case 'left':
+                // 左对齐
+                adjustedHorizontalMargin = marginPx; // 左侧留用户设置的页边距
+                adjustedVerticalMargin = marginPx + (availableHeight - totalHeight) / 2;
+                break;
+            case 'right':
+                // 右对齐
+                adjustedHorizontalMargin = paperWidth - totalWidth - marginPx; // 右侧留用户设置的页边距
+                adjustedVerticalMargin = marginPx + (availableHeight - totalHeight) / 2;
+                break;
+            case 'corner':
+                // 角落对齐（左上角）
+                adjustedHorizontalMargin = marginPx; // 左侧留用户设置的页边距
+                adjustedVerticalMargin = marginPx; // 顶部留用户设置的页边距
+                break;
+            default:
+                // 默认居中对齐
+                adjustedHorizontalMargin = marginPx + (availableWidth - totalWidth) / 2;
+                adjustedVerticalMargin = marginPx + (availableHeight - totalHeight) / 2;
+        }
+        
+        // 收集所有切割线位置，确保以每张照片的四个边缘为基线
+        const verticalLines = new Set();
+        const horizontalLines = new Set();
+        
+        // 遍历每张照片，计算其四个边缘的位置
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                // 计算照片位置
+                const photoX = adjustedHorizontalMargin + col * (effectiveWidth + horizontalSpacingPx);
+                const photoY = adjustedVerticalMargin + row * (effectiveHeight + verticalSpacingPx);
+                
+                // 计算照片四个边缘的位置，考虑切割线调整
+                // 这些边缘位置将作为切割线的基线
+                const leftEdge = photoX + cuttingLineHorizontalAdjustPx;
+                const rightEdge = photoX + effectiveWidth + cuttingLineHorizontalAdjustPx;
+                const topEdge = photoY + cuttingLineVerticalAdjustPx;
+                const bottomEdge = photoY + effectiveHeight + cuttingLineVerticalAdjustPx;
+                
+                // 添加到切割线集合中
+                verticalLines.add(leftEdge);
+                verticalLines.add(rightEdge);
+                horizontalLines.add(topEdge);
+                horizontalLines.add(bottomEdge);
+            }
+        }
+        
+        // 绘制垂直切割线（贯穿整个纸张高度）
+        verticalLines.forEach(x => {
+            // 绘制两条平行的切割线，形成间距
+            ctx.beginPath();
+            ctx.moveTo(x - cuttingLineSpacingPx / 2, 0);
+            ctx.lineTo(x - cuttingLineSpacingPx / 2, paperHeight);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(x + cuttingLineSpacingPx / 2, 0);
+            ctx.lineTo(x + cuttingLineSpacingPx / 2, paperHeight);
+            ctx.stroke();
+        });
+        
+        // 绘制水平切割线（贯穿整个纸张宽度）
+        horizontalLines.forEach(y => {
+            // 绘制两条平行的切割线，形成间距
+            ctx.beginPath();
+            ctx.moveTo(0, y - cuttingLineSpacingPx / 2);
+            ctx.lineTo(paperWidth, y - cuttingLineSpacingPx / 2);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(0, y + cuttingLineSpacingPx / 2);
+            ctx.lineTo(paperWidth, y + cuttingLineSpacingPx / 2);
+            ctx.stroke();
+        });
+    }
+    
+    drawCuttingLines();
     
     // 启用下载和打印按钮
     downloadBtn.disabled = false;
@@ -388,7 +818,7 @@ generateBtn.addEventListener('click', generateLayout);
 
 // 实时浏览功能 - 当参数变化时自动更新排版
 function setupRealTimePreview() {
-    const elementsToWatch = [photoSize, paperSize, layout, colsInput, rowsInput, horizontalSpacing, verticalSpacing];
+    const elementsToWatch = [photoSize, paperSize, layout, colsInput, rowsInput, horizontalSpacing, verticalSpacing, alignment, margin, document.getElementById('showCuttingLines'), document.getElementById('cuttingLineColor'), document.getElementById('cuttingLineHorizontal'), document.getElementById('cuttingLineVertical'), document.getElementById('cuttingLineSpacing')];
     elementsToWatch.forEach(element => {
         element.addEventListener('change', generateLayout);
     });
