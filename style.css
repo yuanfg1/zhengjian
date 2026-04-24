@@ -121,8 +121,8 @@ h2 {
 
 
 
-/* 选项区域 */
-.options-section {
+/* 选项容器 */
+.options-container {
     position: fixed;
     top: 50%;
     right: 20px;
@@ -135,6 +135,7 @@ h2 {
     max-height: 80vh;
     overflow-y: auto;
     z-index: 1000;
+    
 }
 
 .option-group {
